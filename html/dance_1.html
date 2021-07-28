@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=1280, user-scalable=no" />
-    <title>first menu</title>
+    <title>Entertain2</title>
     <style>
         html{
             width : 100%;
@@ -22,24 +22,6 @@
             border: black 3px solid;
             height : 100%;
 
-        }
-        .lab-title{
-            font-size : 80px;
-            font-weight: 700;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-        .start{
-            font-size: 40px;
-            font-weight: 700;
-            display: flex;
-            justify-content: center;
-            bottom: 100px;
-            position: relative;
-            width: 100%;
         }
         .top{
             display: flex;
@@ -97,22 +79,25 @@
             font-size: 50px;
 
         }
-        .tour{
+        .disco{
             height: 100%;
             position: relative;
         }
-        .tour-img{
+        .disco-img{
             height: 200px;
         }
-        .entertain{
+        .hiphop{
             height: 100%;
             position: relative;
         }
-        .entertain-img{
+        .hiphop-img{
             height: 200px;
         }
         .bottom-blank{
             width: 30%;
+            text-align: center;
+            font-weight: 700;
+            font-size: 40px;
         }
         .bottom-back{
             font-weight: 700;
@@ -120,47 +105,16 @@
             width: 40%;
             text-align: center;
         }
-        .bottom-aboutme{
+        .bottom-next{
             font-weight: 700;
             font-size: 40px;
             width: 30%;
             text-align: center;
         }
-        .craig {
+        .craig{
             text-align: end;
         }
-        .flex-container {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .row {
-            width: auto;
-            margin: auto 30px;
-            border: 2px solid #ccc;
-            border-radius: 15px;
-            background: #ffffff
-        }
-        .flex-item {
-            padding: 5px;
-            margin: 15px;
-            line-height: 50px;
-            color: rgb(34, 33, 33);
-            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-            font-size: 3em;
-            text-align: left;
-        }
     </style>
-    <script src="/libs/qimessaging/2/qimessaging.js"></script>
-	<script src="js/typed.min.js"></script>
-	<script src="js/script.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -169,45 +123,40 @@
             <div class="voice_wrapper">
                 <img class="voice_mark" src="src/voice.png">
             </div>
-            <div class="voice_shower">
-                <div class="flex-container">
-                    <div class="row">
-                        <div class="flex-item">
-                            <span id="typed"></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="voice_shower"></div>
+            <div class="snu_wrapper">
+                <img class="snu_mark" src="src/bilab-logo.PNG">
             </div>
-        <div class="snu_wrapper">
-            <img class="snu_mark" src="src/bilab-logo.PNG">
+
         </div>
         <div class="middle">
             <div class="left">
                 <div class="button_wrapper">
-                    <div class="tour">
-                        <img class="tour-img" src="src/tour.png">
+                    <div class="disco">
+                        <img class="disco-img" src="src/dance.png">
                     </div>
-                    <div>ABOUT</div>
+                    <div>DISCO</div>
                 </div>
             </div>
             <div class="right">
                 <div class="button_wrapper">
-                    <div class="entertain">
-                        <img class="entertain-img" src="src/entertain.png">
+                    <div class="hiphop">
+                        <img class="hiphop-img" src="src/hiphop.jpeg">
                     </div>
-                    <div></div>
+                    <div>HIPHOP</div>
                 </div>
             </div>
         </div>
         <div class="bottom">
-            <div class="bottom-blank"></div>
+            <div class="bottom-blank">BACK</div>
             <div class="bottom-back">BACK TO START</div>
-            <div class="bottom-aboutme">ABOUT ME</div>
+            <div class="bottom-next">NEXT</div>
         </div>
     </div>
     <div class="craig">
         Developed by CRAIG
     </div>
 </div>
+
 </body>
 </html>
