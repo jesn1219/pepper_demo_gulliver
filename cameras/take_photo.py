@@ -1,11 +1,14 @@
 # from naoqi import ALProxy
 from PIL import Image
 from motion import photo_motion
+import os
 
 # string of the directory to save photos
 DIRECTORY = "./cameras/photos"
 # the name of the file
 FILENAME = "/test_"
+# the name of the file to save
+PHOTONAME = "instant_photo"
 
 # settings of the device to take a picture
 RESOLUTION = 2
@@ -19,6 +22,7 @@ class Photo:
         self.srv = srv
         self.directory = DIRECTORY
         self.filename = FILENAME
+        self.photo_name = None
         self.count = 0
 
     def motion(self):
@@ -37,7 +41,8 @@ class Photo:
             array = pepper_img[6]
             img_str = str(bytearray(array))
             im = Image.frombytes("RGB", (width, height), img_str)
-            im.save(self.directory + self.filename + str(i) + '.png', "PNG")
+            self.photo_name = self.filename + str(i) + '.png'
+            im.save(self.directory + self.photo_name, "PNG")
 
         self.count += 1
         video_service.unsubscribe(id)
@@ -46,3 +51,6 @@ class Photo:
         self.ready()  # make the robot get ready
         self.save()  # save the photo
         self.motion()
+        command = 'sshpass -p "1847!" scp ' + DIRECTORY + self.photo_name + ' nao@192.168.1.188:/opt/aldebaran/www/apps/bi-html/html/src/' + PHOTONAME + '.png'
+        # print(command)
+        os.system(command)

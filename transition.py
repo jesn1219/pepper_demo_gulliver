@@ -5,6 +5,7 @@ from data_list import *
 from cameras import take_photo
 from functions import updown, saju
 from functions.play_music import *
+from motion import photo_motion
 
 
 aas_configuration = {"bodyLanguageMode": "contextual"}
@@ -25,20 +26,14 @@ class Transition:
             if input_ret['touch_position'] == 'BUTTON_MIDDLE_DOWN':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next")
+                srv['tts'].say("next menu")
                 return SCENES[next_scene]
 
         elif input_ret['type'] == 'speech':
-            if input_ret['word'] == 'start':
+            if input_ret['word'] == 'hello':
                 next_scene = 'first_menu'
                 srv['aas'].say("Hello, Nice to meet you!", aas_configuration)
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                return SCENES[next_scene]
-
-            elif input_ret['word'] == 'hello':
-                print("test")
-                next_scene = 'home'
-                srv['aas'].say("Hello Sir!", aas_configuration)
                 return SCENES[next_scene]
 
             elif input_ret['word'] == 'pepper':
@@ -47,10 +42,14 @@ class Transition:
                 return SCENES[next_scene]
 
             elif input_ret['word'] == 'cheese':
+                # srv['tts'].say("Say cheese")
                 photo_test = take_photo.Photo(srv)
                 photo_test.take()
+                next_scene = 'photo_screen'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                time.sleep(3)
+                srv['tablet'].showWebview(self.get_html_address('home'))
                 pass
-
         # default value
         # return SCENES['home']
 
@@ -59,13 +58,14 @@ class Transition:
             if input_ret['touch_position'] == 'BUTTON_LEFT':
                 next_scene = 'tour'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next")
+                #srv['tts'].say("next menu")
+                srv['aas'].say("What would you like me to introduce?")
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
                 next_scene = 'entertain'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next")
+                srv['tts'].say("next menu")
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_MIDDLE_DOWN':
@@ -83,18 +83,24 @@ class Transition:
                 return SCENES[next_scene]
 
         elif input_ret['type'] == 'speech':
-            if input_ret['word'] == 'bye':
-                return SCENES['exit']
-
-            elif input_ret['word'] == 'first':
+            say = None
+            if input_ret['word'] == 'back':
                 next_scene = 'home'
-                srv['tablet'].showWebview(self.get_html_address(next_scene))
-                return SCENES[next_scene]
-
             elif input_ret['word'] == 'who':
                 next_scene = 'first_menu'
-                srv['tablet'].showWebview(self.get_html_address(next_scene))
-                return SCENES[next_scene]
+            elif input_ret['word'] == 'tour':
+                next_scene = 'tour'
+                say = "What would you like me to introduce?"
+            elif input_ret['word'] == 'play':
+                next_scene = 'entertain'
+                say = "What should we do? Please choose one"
+            else:
+                next_scene = 'first_menu'
+
+            srv['tablet'].showWebview(self.get_html_address(next_scene))
+            if say is not None:
+                srv['aas'].say(say)
+            return SCENES[next_scene]
 
     def tour(self, srv, input_ret):
         if input_ret['type'] == 'touch':
@@ -157,7 +163,7 @@ class Transition:
             elif input_ret['touch_position'] == 'BUTTON_LEFT_DOWN':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("previous")
+                srv['tts'].say("previous menu")
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT_DOWN':
@@ -167,6 +173,69 @@ class Transition:
                     "Are you curious about me? I am Pepper. It is a humanoid robot made by Softbank, and can use artificial intelligence. It is characterized by a cute appearance, and is introduced in various fields such as finance, bookstore, medical care, and distribution fields in Korea",
                     aas_configuration)
                 srv['tts'].setParameter("defaultVoiceSpeed", 70)
+                return SCENES[next_scene]
+
+        elif input_ret['type'] == 'speech':
+            if input_ret['word'] == 'robot':
+                next_scene = 'tour_hsr1'
+                srv['tts'].setParameter("defaultVoiceSpeed", 100)
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "Let me explain the robots in our lab. First, HSR, a human helper robot, is a mobile operation robot.",
+                    aas_configuration)
+
+                next_scene = 'tour_hsr2'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "It is about 1 meter tall and is a versatile robot that can recognize objects through various cameras and pick them up with a gripper. But is it ugly than me?",
+                    aas_configuration)
+
+                next_scene = 'tour_blitz'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "The next robot, Blitz. It is a robot made by combining a base robot, which is specialized in moving objects, and a UR5 robot that picks up objects. In addition, it is a mobile operation robot that is equipped with sound and camera sensors, capable of recognizing objects and gripping them with a gripper.",
+                    aas_configuration)
+
+                next_scene = 'tour_pepper1'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "The last robot to be introduced is me, Pepper. I am a humanoid robot made by Softbank, and I can use artificial intelligence.",
+                    aas_configuration)
+
+                next_scene = 'tour_pepper2'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "I have a cute appearance, and has been introduced in various fields such as finance, bookstores, medical care, and distribution fields in Korea. In addition, it is used as a standard robot in S, S, P, L, among the world robot competitions, Robo Cup League.",
+                    aas_configuration)
+
+                srv['tts'].setParameter("defaultVoiceSpeed", 70)
+                next_scene = 'tour'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                return SCENES[next_scene]
+
+            elif input_ret['word'] == 'lab':
+                next_scene = 'tour_ourlab1'
+                srv['tts'].setParameter("defaultVoiceSpeed", 100)
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "Let me introduce our lab. Our bio-intelligence lab is conducting the following studies. First, we are conducting interdisciplinary research in various fields such as artificial intelligence, psychology, and cognitive science to develop human-level artificial intelligence such as Baby Mind and VTT. We are also actively conducting research on robots on various platforms, such as home robots that work with humans and Robocup, a world robot competition.",
+                    aas_configuration)
+
+                next_scene = 'tour_ourlab2'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say(
+                    "If you have any other questions or inquiries, please refer to the following website or contact us.",
+                    aas_configuration)
+
+                srv['tts'].setParameter("defaultVoiceSpeed", 70)
+                next_scene = 'tour'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                return SCENES[next_scene]
+
+            elif input_ret['word'] == 'back':
+                next_scene = 'first_menu'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say("Okay. What should we do then?")
                 return SCENES[next_scene]
 
     def entertain(self, srv, input_ret):
@@ -180,7 +249,7 @@ class Transition:
             elif input_ret['touch_position'] == 'BUTTON_LEFT_DOWN':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("previous")
+                srv['tts'].say("previous menu")
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_LEFT':
@@ -194,19 +263,48 @@ class Transition:
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
                 file_path = "/opt/aldebaran/www/apps/bi-sound/UrbanStreet.mp3"
-                player = Dance(srv, "disco", PEPPER_IP)
-                player.motion()
-                print("hello")
-                # player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
-                # player.post.playFileFromPosition(file_path, 0)
-                # entertain.disco(srv)
-                # player.post.stopAll()
+                # player = Dance(srv, "disco", PEPPER_IP)
+                # player.motion()
+                # print("hello")
+                player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
+                player.post.playFileFromPosition(file_path, 0)
+                entertain.disco(srv)
+                player.post.stopAll()
+                photo_motion.stand(srv)
                 pass
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT_DOWN':
                 next_scene = 'entertain2'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next")
+                srv['tts'].say("next menu")
+                return SCENES[next_scene]
+            
+        elif input_ret['type'] == 'speech':
+            if input_ret['word'] == 'elephant':
+                file_path = "/opt/aldebaran/www/apps/bi-sound/elephant.ogg"
+                # srv['tts'].post.say('yes')
+                player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
+                player.post.playFileFromPosition(file_path, 0)
+                entertain.elephant(srv)
+                player.post.stopAll()
+                pass
+
+            elif input_ret['word'] == 'dance':
+                file_path = "/opt/aldebaran/www/apps/bi-sound/UrbanStreet.mp3"
+                # player = Dance(srv, "disco", PEPPER_IP)
+                # player.motion()
+                # print("hello")
+                player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
+                player.post.playFileFromPosition(file_path, 0)
+                entertain.disco(srv)
+                player.post.stopAll()
+                photo_motion.stand(srv)
+                pass
+            
+            elif input_ret['word'] == 'back':
+                next_scene = 'first_menu'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['aas'].say("Okay. What should we do then?")
                 return SCENES[next_scene]
 
     def entertain2(self, srv, input_ret):
@@ -220,7 +318,7 @@ class Transition:
             elif input_ret['touch_position'] == 'BUTTON_LEFT_DOWN':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("previous")
+                srv['tts'].say("previous menu")
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_LEFT':
@@ -236,7 +334,7 @@ class Transition:
             elif input_ret['touch_position'] == 'BUTTON_RIGHT_DOWN':
                 next_scene = 'entertain'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next")
+                srv['tts'].say("next menu")
                 return SCENES[next_scene]
 
     # return the object of the next scene

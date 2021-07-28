@@ -5,15 +5,14 @@ import sys
 import time
 import qi
 from naoqi import ALProxy
-
 from transition import *
 
 # /opt/aldebaran/www/apps/bi-html/html/
 DEFAULT_HTML_PAGE = 'http://198.18.0.1/apps/bi-html/home.html'
 # the initial value of signalID (global value)
 signalID = 0
-VALID = 0.5
-
+VALID = 0.35
+VOLUME = 0.8
 
 # class of the monitor screen with input values
 class Monitor_input:
@@ -152,7 +151,7 @@ class Main:
         srv['face_detection'] = session.service("ALFaceDetection")
 
         # set the audio
-        srv['tts'].setVolume(0.1)  # [CHECK] Does this command set volume for entire scenario?
+        srv['tts'].setVolume(VOLUME)  # [CHECK] Does this command set volume for entire scenario?
         srv['tts'].setParameter("defaultVoiceSpeed", 85)
         srv['audio_player'] = session.service("ALAudioPlayer")
 
