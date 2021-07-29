@@ -1,8 +1,8 @@
 from naoqi import ALProxy
-from motion import entertain, music_motion
+from motion import entertain, photo_motion
 
 
-PATH = {"disco": "UrbanStreet.mp3", "bang": "", "guitar": "", "saxophone": "epicsax.ogg"}
+PATH = {"disco": "UrbanStreet.mp3", "bang": "", "guitar": "guitar_bgm.mp3", "saxophone": "epicsax.ogg"}
 BASE_PATH = "/opt/aldebaran/www/apps/bi-sound/"
 
 
@@ -12,42 +12,22 @@ class Play:
         self.mode = mode
         self.path = BASE_PATH + PATH[self.mode]
         self.ip = ip
+        self.modes = PATH.keys()
 
     def motion(self):
-        pass
-
-
-class Dance(Play):
-    def __init__(self, srv, mode, ip):
-        Play.__init__(self, srv, mode, ip)
-        self.modes = ["disco", "bang"]
-
-    def motion(self):
-        modes = self.modes
-        mode = self.modes
-
-        player = ALProxy("ALAudioPlayer", self.ip, 9559)
-        player.post.playFileFromPosition(self.path, 0)
-        if mode == modes[0]:
-            entertain.disco(self.srv)
-        elif mode == modes[1]:
-            entertain.bang(self.srv)
-        player.post.stopAll()
-
-
-class Music(Play):
-    def __init__(self, srv, mode, ip):
-        Play.__init__(self, srv, mode, ip)
-        self.modes = ["guitar", "saxophone"]
-
-    def motion(self):
-        modes = self.modes
         mode = self.mode
+        modes = self.modes
+        srv = self.srv
 
         player = ALProxy("ALAudioPlayer", self.ip, 9559)
         player.post.playFileFromPosition(self.path, 0)
         if mode == modes[0]:
-            music_motion.guitar(self.srv)
+            entertain.disco(srv)
         elif mode == modes[1]:
-            music_motion.saxophone(self.srv)
+            entertain.bang(srv)
+        elif mode == modes[2]:
+            entertain.guitar(srv)
+        elif mode == modes[3]:
+            entertain.saxophone(srv)
         player.post.stopAll()
+        photo_motion.stand(srv)

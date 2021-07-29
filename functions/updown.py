@@ -1,5 +1,6 @@
+import time
 from random import randint
-from speech import audio
+from data_list import *
 
 # the string of responses
 UP = "Up"
@@ -7,17 +8,10 @@ DOWN = "Down"
 CORRECT = "That's correct!"
 ERROR = "Error occurs."  # error statement
 
-# the constant values of the range of the answer
-MIN = 1
-MAX = 50
-
-# the constant value of trials
-TRIAL = 10
-
 
 class UpDown:
     def __init__(self, srv):
-        self.answer = randint(MIN, MAX + 1)
+        self.answer = randint(1, 10 + 1)
         self.tts = srv['tts']
         self.asr = srv['asr']
         srv['asr'].setLanguage("English")
@@ -49,35 +43,34 @@ class UpDown:
             return "You loose."
         return "Exceeded the number of attempts. Game over."
 
-    def play(self):
+    def play(self, input_ret):
         tts = self.tts
+        tts.say("Hello!")
 
         # initialization
         correct = False
         count = 0
+        while count < 3:
+            tts.say("Say the number between 1 to 10. If you want to stop the game, say 'Stop'.")
+            while input_ret['type'] != 'speech':
+                time.sleep(0.01)
+            value = input_ret['word']
+            # check if user wants to stop the game
+            if value == 'stop':
+                tts.say("The game ends.")
+                return  # stop the game
 
-        tts.say("Hello!")
-
-        while count < TRIAL:
-            tts.say("Say the number between %d to %d" % (MIN, MAX))
-            value = audio.get_string()
             try:
-                if value is audio.INVALID:
+                int_value = NUMBERS[value]
+                if int_value not in NUMBERS.values():
                     raise ValueError
-                int_value = int(value)
-                if int_value not in range(MIN, MAX + 1):
-                    raise ValueError
-            except ValueError:
+            except (ValueError, KeyError):
                 tts.say("Invalid. Try again.")
                 continue
-            try:
-                response = self.response(int_value)
-                tts.say(response)
-                if response == ERROR:
-                    raise RuntimeError
-            except RuntimeError:
-                return  # the program ends
-            correct = self.correct(int_value)  # update the value
+
+            response = self.response(int_value)
+            tts.say(response)
+            correct = self.correct(int_value)  # update the result
             if correct:
                 break  # the game ends if the answer is correct
             count += 1

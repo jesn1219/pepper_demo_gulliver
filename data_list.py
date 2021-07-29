@@ -8,6 +8,14 @@ FRAME_WIDTH = 1280
 FRAME_HEIGHT = 800
 DEFAULT_VOLUME = 70
 
+# dictionary of the numbers
+NUMBERS = dict()
+ENG_NUM = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+INTEGERS = [i for i in range(1, 10 + 1)]
+for e, i in zip(ENG_NUM, INTEGERS):
+    NUMBERS[e] = i
+UPDOWN_KEYS = list(NUMBERS.keys()) + ['stop']
+
 # dictionary of the boundaries
 TOUCH_LIST = dict()
 TOUCH_LIST['RIGHT_SIDE'] = {"x": [FRAME_WIDTH / 2, FRAME_WIDTH], "y": [0, FRAME_HEIGHT], "name": "RIGHT_SIDE"}
@@ -36,16 +44,6 @@ SCENES['tour'] = ['tour', \
                        'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
                       ['next', 'first', 'lab', 'robot', 'back']]
 
-SCENES['entertain'] = ['entertain', \
-                           ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
-                            'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                           ['next', 'first', 'dance', 'elephant', 'back']]
-
-SCENES['entertain2'] = ['entertain2', \
-                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
-                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                            ['back', 'next', 'first']]
-
 SCENES['tour_hsr1'] = ['tour_hsr1', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
@@ -55,3 +53,29 @@ SCENES['tour_hsr2'] = ['tour_hsr2', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
                            ['next', 'first']]
+
+SCENES['entertain'] = ['entertain', \
+                           ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
+                            'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                           ['next', 'first', 'music', 'elephant', 'back']]
+
+SCENES['entertain2'] = ['entertain2', \
+                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
+                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                            ['back', 'next', 'first']]
+
+SCENES['dance_1'] = ['dance_1', \
+                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
+                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                            ['back', 'next', 'first', 'disco', 'hiphop']]
+
+SCENES['dance_2'] = ['dance_2', \
+                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
+                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                            ['back', 'next', 'first', 'guitar', 'jazz']]
+
+# for the "updown game" mode
+SCENES['updown'] = ['updown', \
+                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
+                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                            UPDOWN_KEYS]

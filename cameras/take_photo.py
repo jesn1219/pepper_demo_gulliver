@@ -51,6 +51,7 @@ class Photo:
         self.ready()  # make the robot get ready
         self.save()  # save the photo
         self.motion()
-        command = 'sshpass -p "1847!" scp ' + DIRECTORY + self.photo_name + ' nao@192.168.1.188:/opt/aldebaran/www/apps/bi-html/html/src/' + PHOTONAME + '.png'
+        command = 'sshpass -p "1847!" scp ' + self.directory + self.photo_name \
+                  + ' nao@192.168.1.188:/opt/aldebaran/www/apps/bi-html/html/src/' + PHOTONAME + '.png'
         # print(command)
         os.system(command)
