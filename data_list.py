@@ -25,33 +25,33 @@ SCENES['init'] = ['init', ['RIGHT_SIDE', 'LEFT_SIDE'], ['bye', 'next', 'first']]
 SCENES['1'] = ['1', ['RIGHT_SIDE', 'LEFT_SIDE'], ['bye', 'next', 'first']]
 SCENES['exit'] = ['exit', [], []]
 
-SCENES['home'] = ['home', ['BUTTON_MIDDLE_DOWN', 'JESNK_SIDE'], ['start', 'cheese', 'pepper', 'hello']]
+SCENES['home'] = ['home', ['BUTTON_MIDDLE_DOWN', 'JESNK_SIDE'], ['cheese', 'pepper', 'hello', 'bye']]
 
 SCENES['first_menu'] = ['first_menu', \
                             ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
-                             'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], ['bye', 'next', 'first']]
+                             'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], ['next', 'first', 'tour', 'play', 'back']]
 
 SCENES['tour'] = ['tour', \
                       ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                        'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                      ['bye', 'next', 'first']]
+                      ['next', 'first', 'lab', 'robot', 'back']]
 
 SCENES['entertain'] = ['entertain', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                           ['bye', 'next', 'first']]
+                           ['next', 'first', 'dance', 'elephant', 'back']]
 
 SCENES['entertain2'] = ['entertain2', \
                             ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                              'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                            ['bye', 'next', 'first']]
+                            ['back', 'next', 'first']]
 
 SCENES['tour_hsr1'] = ['tour_hsr1', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                           ['bye', 'next', 'first']]
+                           ['next', 'first']]
 
 SCENES['tour_hsr2'] = ['tour_hsr2', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                           ['bye', 'next', 'first']]
+                           ['next', 'first']]
