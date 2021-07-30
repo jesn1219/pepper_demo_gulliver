@@ -33,16 +33,17 @@ SCENES['init'] = ['init', ['RIGHT_SIDE', 'LEFT_SIDE'], ['bye', 'next', 'first']]
 SCENES['1'] = ['1', ['RIGHT_SIDE', 'LEFT_SIDE'], ['bye', 'next', 'first']]
 SCENES['exit'] = ['exit', [], []]
 
-SCENES['home'] = ['home', ['BUTTON_MIDDLE_DOWN', 'JESNK_SIDE'], ['cheese', 'pepper', 'hello', 'bye']]
+SCENES['home'] = ['home', ['BUTTON_MIDDLE_DOWN', 'JESNK_SIDE'], ['pepper', 'hello', 'bye']]
 
 SCENES['first_menu'] = ['first_menu', \
                             ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
-                             'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], ['next', 'first', 'tour', 'play', 'back']]
+                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
+                        ['about', 'play', 'back', 'bye']]
 
 SCENES['tour'] = ['tour', \
                       ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                        'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                      ['next', 'first', 'lab', 'robot', 'back']]
+                      ['lab', 'robot', 'back']]
 
 SCENES['tour_hsr1'] = ['tour_hsr1', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
@@ -57,12 +58,12 @@ SCENES['tour_hsr2'] = ['tour_hsr2', \
 SCENES['entertain'] = ['entertain', \
                            ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                             'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                           ['next', 'first', 'music', 'elephant', 'back']]
+                           ['music', 'elephant', 'back', 'next']]
 
 SCENES['entertain2'] = ['entertain2', \
                             ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \
                              'BUTTON_LEFT_DOWN', 'BUTTON_MIDDLE_DOWN', 'BUTTON_RIGHT_DOWN'], \
-                            ['back', 'next', 'first']]
+                            ['back', 'next', 'first', 'cheese']]
 
 SCENES['dance_1'] = ['dance_1', \
                             ['JESNK_SIDE', 'BUTTON_RIGHT', 'BUTTON_LEFT', \

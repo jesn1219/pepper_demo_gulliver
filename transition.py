@@ -5,7 +5,6 @@ from data_list import *
 from cameras import take_photo
 from functions import updown
 from functions.play_music import *
-from motion import photo_motion
 
 
 aas_configuration = {"bodyLanguageMode": "contextual"}
@@ -81,6 +80,22 @@ class Transition:
         updown.UpDown(srv).play(input_ret)
         return SCENES['entertain2']
 
+    def do_elephant(self, srv):
+        file_path = "/opt/aldebaran/www/apps/bi-sound/elephant.ogg"
+        # srv['tts'].post.say('yes')
+        player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
+        player.post.playFileFromPosition(file_path, 0)
+        entertain.elephant(srv)
+        player.post.stopAll()
+
+    def play_music(self, srv, mode):
+        try:
+            player = Play(srv, mode, PEPPER_IP)
+            player.motion()
+        except KeyError:
+            print("KeyError occurs.")  # for debugging
+            return
+
     # initial screen
     def home(self, srv, input_ret):
         if input_ret['type'] == 'touch':
@@ -102,22 +117,11 @@ class Transition:
                 srv['aas'].say("Yep! Hello?!", aas_configuration)
                 return SCENES[next_scene]
 
-            elif input_ret['word'] == 'cheese':
-                # srv['tts'].say("Say cheese")
-                photo_test = take_photo.Photo(srv)
-                photo_test.take()
-                next_scene = 'photo_screen'
-                srv['tablet'].showWebview(self.get_html_address(next_scene))
-                time.sleep(3)
-                srv['tablet'].showWebview(self.get_html_address('home'))
-                pass
-
     def first(self, srv, input_ret):
         if input_ret['type'] == 'touch':
             if input_ret['touch_position'] == 'BUTTON_LEFT':
                 next_scene = 'tour'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                # srv['tts'].say("next menu")
                 srv['aas'].say("What would you like me to introduce?")
                 return SCENES[next_scene]
 
@@ -125,6 +129,11 @@ class Transition:
                 next_scene = 'entertain'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
                 srv['tts'].say("What should we do? Please choose one")
+                return SCENES[next_scene]
+
+            elif input_ret['touch_position'] == 'BUTTON_LEFT_DOWN':
+                srv['tts'].say("Bye-bye!")
+                next_scene = 'exit'
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_MIDDLE_DOWN':
@@ -145,14 +154,15 @@ class Transition:
             say = None
             if input_ret['word'] == 'back':
                 next_scene = 'home'
-            elif input_ret['word'] == 'who':
-                next_scene = 'first_menu'
-            elif input_ret['word'] == 'tour':
+            elif input_ret['word'] == 'about':
                 next_scene = 'tour'
                 say = "What would you like me to introduce?"
             elif input_ret['word'] == 'play':
                 next_scene = 'entertain'
                 say = "What should we do? Please choose one"
+            elif input_ret['word'] == 'bye':
+                next_scene = 'exit'
+                say = "Bye-bye!"
             else:
                 next_scene = 'first_menu'
 
@@ -195,35 +205,16 @@ class Transition:
         elif input_ret['type'] == 'speech':
             if input_ret['word'] == 'robot':
                 next_scene = self.tour_robot(srv)
-
             elif input_ret['word'] == 'lab':
                 next_scene = self.tour_lab(srv)
-
             elif input_ret['word'] == 'back':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
                 srv['aas'].say("Okay. What should we do then?")
-
             else:
                 next_scene = 'tour'
 
             return SCENES[next_scene]
-
-    def do_elephant(self, srv):
-        file_path = "/opt/aldebaran/www/apps/bi-sound/elephant.ogg"
-        # srv['tts'].post.say('yes')
-        player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
-        player.post.playFileFromPosition(file_path, 0)
-        entertain.elephant(srv)
-        player.post.stopAll()
-
-    def play_music(self, srv, mode):
-        try:
-            player = Play(srv, mode, PEPPER_IP)
-            player.motion()
-        except KeyError:
-            print("KeyError occurs.")  # for debugging
-            return
 
     def entertain(self, srv, input_ret):
         if input_ret['type'] == 'touch':
@@ -243,7 +234,10 @@ class Transition:
                 self.do_elephant(srv)
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
-                self.play_music(srv, "disco")
+                next_scene = 'dance_1'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['tts'].say("Next menu. Please choose one to play.")
+                return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT_DOWN':
                 next_scene = 'entertain2'
@@ -256,16 +250,21 @@ class Transition:
                 self.do_elephant(srv)
 
             elif input_ret['word'] == 'music':
-                # self.play_music(srv, "disco")
                 next_scene = 'dance_1'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
-                srv['tts'].say("next menu")
+                srv['tts'].say("Okay. Please choose one to play.")
                 return SCENES[next_scene]
 
             elif input_ret['word'] == 'back':
                 next_scene = 'first_menu'
                 srv['tablet'].showWebview(self.get_html_address(next_scene))
                 srv['aas'].say("Okay. What should we do then?")
+                return SCENES[next_scene]
+
+            elif input_ret['word'] == 'next':
+                next_scene = 'entertain2'
+                srv['tablet'].showWebview(self.get_html_address(next_scene))
+                srv['tts'].say("next menu")
                 return SCENES[next_scene]
 
     # fix after implementation
@@ -284,7 +283,13 @@ class Transition:
                 return SCENES[next_scene]
 
             elif input_ret['touch_position'] == 'BUTTON_LEFT':
-                pass  # need to implement this
+                # srv['tts'].say("Say cheese")
+                # if input_ret['type'] == 'speech' and input_ret['word'] == 'cheese':
+                photo_test = take_photo.Photo(srv)
+                photo_test.take()
+                srv['tablet'].showWebview(self.get_html_address('photo_screen'))
+                time.sleep(3)
+                srv['tablet'].showWebview(self.get_html_address('entertain2'))
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
                 srv['tts'].say("You must say the number in English." \
@@ -318,6 +323,7 @@ class Transition:
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
                 self.play_music(srv, "bang")
+                # raise ValueError
 
             elif input_ret['touch_position'] == 'BUTTON_RIGHT_DOWN':
                 next_scene = 'dance_2'
@@ -360,5 +366,9 @@ class Transition:
             return self.entertain(srv, input_ret)
         elif scene == "entertain2":
             return self.entertain2(srv, input_ret)
+        elif scene == "dance_1":
+            return self.dance1(srv, input_ret)
+        elif scene == "dance_2":
+            return self.dance2(srv, input_ret)
         elif scene == "updown":
             return self.updown_game(srv, input_ret)

@@ -1,7 +1,10 @@
-# from naoqi import ALProxy
+from naoqi import ALProxy
 from PIL import Image
-from motion import photo_motion
 import os
+
+from data_list import *
+from motion import photo_motion
+
 
 # string of the directory to save photos
 DIRECTORY = "./cameras/photos"
@@ -9,6 +12,8 @@ DIRECTORY = "./cameras/photos"
 FILENAME = "/test_"
 # the name of the file to save
 PHOTONAME = "instant_photo"
+# path of the effect sound file
+SOUND = "/opt/aldebaran/www/apps/bi-sound/camera.ogg"
 
 # settings of the device to take a picture
 RESOLUTION = 2
@@ -26,7 +31,10 @@ class Photo:
         self.count = 0
 
     def motion(self):
+        # player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
+        # player.post.playFileFromPosition(SOUND, 1.8, 0.1, 0.0)
         photo_motion.take_picture(self.srv)  # motion
+        # player.post.stopAll()
 
     def ready(self):
         photo_motion.stand(self.srv)
@@ -53,5 +61,5 @@ class Photo:
         self.motion()
         command = 'sshpass -p "1847!" scp ' + self.directory + self.photo_name \
                   + ' nao@192.168.1.188:/opt/aldebaran/www/apps/bi-html/html/src/' + PHOTONAME + '.png'
-        # print(command)
+        # print(command)  # for debugging
         os.system(command)
