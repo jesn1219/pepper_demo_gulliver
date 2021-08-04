@@ -11,7 +11,7 @@ from transition import *
 DEFAULT_HTML_PAGE = 'http://198.18.0.1/apps/bi-html/home.html'
 # the initial value of signalID (global value)
 signalID = 0
-VALID = 0.35
+VALID = 0.4
 VOLUME = 0.1
 
 # class of the monitor screen with input values
