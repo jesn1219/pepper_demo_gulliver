@@ -56,7 +56,7 @@ class Photo:
         video_service.unsubscribe(id)
 
     def take(self):
-        self.ready()  # make the robot get ready
+        # self.ready()  # make the robot get ready
         self.save()  # save the photo
         self.motion()
         command = 'sshpass -p "1847!" scp ' + self.directory + self.photo_name \

@@ -27,6 +27,14 @@
             display: flex;
             height: 20%
         }
+        .top-date{
+            padding-top: 40px;
+            padding-right: 30px;
+            font-weight: 700;
+            font-size: 40px;
+            width: 30%;
+            text-align: center;
+        }
         .middle{
             display: flex;
             height: 60%
@@ -39,24 +47,19 @@
         .voice_wrapper{
             width: 10%;
         }
-        .voice_mark{
-            width: 100px;
-            height: 100px;
-            padding: 20px;
-        }
-        .voice_shower{
+        .date_shower{
+            padding-left: 40px;
             width: 80%;
-            border: 3px solid;
             margin: 30px;
             border-radius: 10px;
         }
         .snu_wrapper{
             width: 10%;
-            padding: 20px;
         }
         .snu_mark{
             width: 100px;
             height: 100px;
+            padding: 30px;
         }
         .left{
             border-radius: 10px;
@@ -79,18 +82,18 @@
             font-size: 50px;
 
         }
-        .tour{
+        .arm_robot{
             height: 100%;
             position: relative;
         }
-        .tour-img{
+        .arm_robot-img{
             height: 200px;
         }
-        .entertain{
+        .iot_lab{
             height: 100%;
             position: relative;
         }
-        .entertain-img{
+        .iot_lab-img{
             height: 200px;
         }
         .bottom-blank{
@@ -114,36 +117,62 @@
         .craig{
             text-align: end;
         }
+        .flex-container {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+        .flex-item {
+            padding: 5px;
+            margin: 15px;
+            line-height: 50px;
+            color: initial;
+            font-size: 60px;
+            text-align: start;
+        }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <div class="border">
         <div class="top">
-            <div class="voice_wrapper">
-                <img class="voice_mark" src="src/voice.png">
-            </div>
-            <div class="voice_shower"></div>
             <div class="snu_wrapper">
                 <img class="snu_mark" src="src/bilab-logo.PNG">
             </div>
-
+            <div class="date_shower">
+                <div class="flex-container">
+                    <div class="flex-item">ABOUT</div>
+                </div>
+            </div>
+            <div class="top-date">
+                <script>
+                    var a = new Date();
+                    document.write(a.toDateString() + "<br>")
+                </script>
+            </div>
         </div>
         <div class="middle">
             <div class="left">
                 <div class="button_wrapper">
-                    <div class="tour">
-                        <img class="tour-img" src="src/map.png">
+                    <div class="arm_robot">
+                        <img class="arm_robot-img" src="src/armrobot.jpg">
                     </div>
-                    <div>OUR LAB</div>
+                    <div>ARM ROBOT</div>
                 </div>
             </div>
             <div class="right">
                 <div class="button_wrapper">
-                    <div class="entertain">
-                        <img class="entertain-img" src="src/robot1.png">
+                    <div class="iot_lab">
+                        <img class="iot_lab-img" src="src/iot_lab.jpeg">
                     </div>
-                    <div>ROBOTS</div>
+                    <div>IOT PLATFORM</div>
                 </div>
             </div>
         </div>

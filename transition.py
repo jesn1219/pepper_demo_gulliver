@@ -20,36 +20,45 @@ class Transition:
             name = name[:-5]
         return "http://198.18.0.1/apps/bi-html/" + name + '.html'
 
-    def tour_robot(self, srv):
-        next_scene = 'tour_hsr1'
+    def tour_iot(self, srv):
+        next_scene = 'tour_iot'
         srv['tts'].setParameter("defaultVoiceSpeed", 100)
         srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
-            "Let me explain the robots in our lab. First, HSR, a human helper robot, is a mobile operation robot.",
+            "This room is a smart space built by an IoT platform. This IoT platform looks at the IoT environment based on service, not device. Users can build their own smart space from the perspective of a combination of services through a easy script language.",
             aas_configuration)
 
-        next_scene = 'tour_hsr2'
-        srv['tablet'].showWebview(self.get_html_address(next_scene))
+        # add the scene to introduce
+        next_scene = 'tour_iot'  # NEED TO FIX THIS
+        # srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
-            "It is about 1 meter tall and is a versatile robot that can recognize objects through various cameras and pick them up with a gripper. But is it ugly than me?",
+            "Currently, entrance management, indoor environment management, and plant management are being performed through the IoT.",
             aas_configuration)
 
-        next_scene = 'tour_blitz'
-        srv['tablet'].showWebview(self.get_html_address(next_scene))
+        # add the scene to introduce
+        next_scene = 'tour_iot'  # NEED TO FIX THIS
+        # srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
-            "The next robot, Blitz. It is a robot made by combining a base robot, which is specialized in moving objects, and a UR5 robot that picks up objects. In addition, it is a mobile operation robot that is equipped with sound and camera sensors, capable of recognizing objects and gripping them with a gripper.",
+            "We use heat sensor, camera, and motion sensor to guide people's entrance in accordance with the corona prevention rules.",
             aas_configuration)
 
-        next_scene = 'tour_pepper1'
-        srv['tablet'].showWebview(self.get_html_address(next_scene))
+        # add the scene to introduce
+        next_scene = 'tour_iot'  # NEED TO FIX THIS
+        # srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
-            "The last robot to be introduced is me, Pepper. I am a humanoid robot made by Softbank, and I can use artificial intelligence.",
+            "And, It is sensing environmental information through air quality sensors and some more sensors installed in three places in the room, and takes appropriate actions such as operating air conditioner and air purifier.",
             aas_configuration)
 
-        next_scene = 'tour_pepper2'
+        # add the scene to introduce
+        # next_scene = 'tour_iot'  # NEED TO FIX THIS
         srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
-            "I have a cute appearance, and has been introduced in various fields such as finance, bookstores, medical care, and distribution fields in Korea. In addition, it is used as a standard robot in S, S, P, L, among the world robot competitions, Robo Cup League.",
+            "Near the window, you can see a smart pot management. Measuring the soil humidity of each pot, it supplies water and light appropriately.",
+            aas_configuration)
+
+        # add the scene to introduce
+        srv['aas'].say(
+            "All IoT sensor data in this room is collected on a local server, and when an abnormality is detected, it can be checked on the dashboard.",
             aas_configuration)
 
         srv['tts'].setParameter("defaultVoiceSpeed", 70)
@@ -57,15 +66,28 @@ class Transition:
         srv['tablet'].showWebview(self.get_html_address(next_scene))
         return next_scene
 
-    def tour_lab(self, srv):
-        next_scene = 'tour_ourlab1'
+    def tour_arm(self, srv):
+        next_scene = 'tour_armrobot'
         srv['tts'].setParameter("defaultVoiceSpeed", 100)
         srv['tablet'].showWebview(self.get_html_address(next_scene))
+        srv['aas'].say("Let me explain the arm robot space.", aas_configuration)
+        srv['aas'].say("Here you can see the kinova gen3 lite, an arm robot for working and studying.", aas_configuration)
+
+        # add the scene to introduce
+        srv['aas'].say("This arm robot have a 6 joints and a two-finger gripper that can grip objects up to 500g.", aas_configuration)
+        # add the scene to introduce
+        srv['aas'].say("By mounting an rgbd camera named Realsense, it is possible to understanding the environments using vision module.",
+                       aas_configuration)
+        # add the scene to introduce
         srv['aas'].say(
-            "Let me introduce our lab. Our bio-intelligence lab is conducting the following studies. First, we are conducting interdisciplinary research in various fields such as artificial intelligence, psychology, and cognitive science to develop human-level artificial intelligence such as Baby Mind and VTT. We are also actively conducting research on robots on various platforms, such as home robots that work with humans and Robocup, a world robot competition.",
+            "The demo prepared by our researcher is a task of categorizing and tidying up the objects.",
+            aas_configuration)
+        # add the scene to introduce
+        srv['aas'].say(
+            "In addition, you can experience a remote control using vr service that allows you to perform tasks remotely using a robot arm by connecting to the oculus quest2.",
             aas_configuration)
 
-        next_scene = 'tour_ourlab2'
+        next_scene = 'tour_armrobot2'
         srv['tablet'].showWebview(self.get_html_address(next_scene))
         srv['aas'].say(
             "If you have any other questions or inquiries, please refer to the following website or contact us.",
@@ -77,12 +99,46 @@ class Transition:
         return next_scene
 
     def updown_game(self, srv, input_ret):
-        updown.UpDown(srv).play(input_ret)
+        tts = srv['tts']
+        tts.say("Hello!")
+
+        game = updown.UpDown(srv)
+        correct = False
+
+        trial = 3  # number of trials
+        while trial > 0:
+            tts.say("Say the number between 1 to 10. If you want to stop the game, say 'Stop'.")
+            time.sleep(0.01)
+            tts.say("The number of remaining attempts is only %d" % trial)
+            while input_ret['type'] != 'speech':
+                time.sleep(0.01)
+            value = input_ret['word']
+            # check if user wants to stop the game
+            if value == 'stop':
+                tts.say("The game ends.")
+                return SCENES['entertain2']  # stop the game
+            try:
+                int_value = NUMBERS[value]
+                if int_value not in NUMBERS.values():
+                    raise ValueError
+            except (ValueError, KeyError):
+                tts.say("Invalid. Try again.")
+                continue
+            if game.response(int_value):
+                correct = True
+                break
+            else:
+                trial -= 1
+
+        if correct:
+            tts.say("You Win! Congratulations!")
+        else:
+            tts.say("You lose. Game over.")
+
         return SCENES['entertain2']
 
     def do_elephant(self, srv):
         file_path = "/opt/aldebaran/www/apps/bi-sound/elephant.ogg"
-        # srv['tts'].post.say('yes')
         player = ALProxy("ALAudioPlayer", PEPPER_IP, 9559)
         player.post.playFileFromPosition(file_path, 0)
         entertain.elephant(srv)
@@ -174,10 +230,10 @@ class Transition:
     def tour(self, srv, input_ret):
         if input_ret['type'] == 'touch':
             if input_ret['touch_position'] == 'BUTTON_RIGHT':
-                next_scene = self.tour_robot(srv)
+                next_scene = self.tour_iot(srv)
 
             elif input_ret['touch_position'] == 'BUTTON_LEFT':
-                next_scene = self.tour_lab(srv)
+                next_scene = self.tour_arm(srv)
 
             elif input_ret['touch_position'] == 'BUTTON_MIDDLE_DOWN':
                 next_scene = 'home'
@@ -294,6 +350,8 @@ class Transition:
             elif input_ret['touch_position'] == 'BUTTON_RIGHT':
                 srv['tts'].say("You must say the number in English." \
                                + "Other languages are not allowed.")
+                time.sleep(0.1)  # wait for making sound not to overlap
+                srv['tts'].say("Touch anywhere to start the game.")
                 time.sleep(1)  # wait for a second
                 next_scene = 'updown'
                 return SCENES[next_scene]
