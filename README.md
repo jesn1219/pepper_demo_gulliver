@@ -1,0 +1,78 @@
+# Pepper Demonstration for Gulliver project.
+
+Pepper demo for gulliver project.
+
+Developed by Jae-ah Lee, Jesoon Kang in BioIntelligence LAB (BILAB) & Cognitive Recognition Artifical Intelligence Group (CRAIG)
+
+
+## Description
+
+This repo contains implementation code for PEPPER.
+
+This repo includes motion, TTS, HTML interworking with tablet implementation codes for Pepper to introduce the BI LAB.
+
+Codes are implemented based on Python 2.7 and Naoqi 2.5 versions. and other dependencies are exist.
+
+## Installation
+
+### Requirements
+* Ubuntu 16.04
+* Python 2.7
+
+The following packages are needed to execute the code.
+
+```
+NAOqi 2.5
+
+Installation & Setup reference : https://developer.softbankrobotics.com/pepper-naoqi-25-downloads-linux
+```
+
+```
+Python2.7 packages
+
+pip install pillow requests bs4
+```
+
+## Usage
+
+```
+python main.py
+```
+
+
+## Implementation Specification
+
+Our demonstration program are contains following files
+
+```
+main.py 
+* For execute. wrapping file
+```
+```
+main_engversion.py
+* main logic file for English demonstrations
+```
+```
+trainsition.py 
+* For specified codes for each Scene trainsition and each followed action
+```
+```
+data_list.py 
+* For specified data for universial usage, e.g. Touch area for each scene, Word list for oral command.
+```
+```
+./html/
+* Directory folder for html files & image files for tablet display
+```
+```
+./motion/
+* Directory folder for some entertain motions
+```
+```
+./sound/
+* Directory folder for some entertain & effect sounds
+```
+```
+./camera/
+* Module for dealing cameras on pepper
+```
