@@ -2,7 +2,7 @@
 
 Pepper demo for gulliver project.
 
-Developed by Jae-ah Lee, Jesoon Kang in BioIntelligence LAB (BILAB) & Cognitive Recognition Artifical Intelligence Group (CRAIG)
+Developed by Jaeah Lee, Jesoon Kang in BioIntelligence LAB (BILAB) & Cognitive Recognition Artifical Intelligence Group (CRAIG)
 
 
 ## Description
