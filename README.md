@@ -33,6 +33,24 @@ Python2.7 packages
 pip install pillow requests bs4
 ```
 
+## Prepares for execute
+
+First of all, clone this repo in local device.
+```
+git clone https://github.com/jesn1219/pepper_demo_v1.git
+```
+
+Before executes our codes, 
+
+Some files need to be moved into the pepper.
+
+```
+* Copy all files in OUR_REPO: ./html/*  to  Pepper: /opt/aldebaran/www/apps/bi-html/html/
+
+* Copy all files in OUR_REPO: ./sound/*  to  Pepper: /opt/aldebaran/www/apps/bi-sounds/
+```
+
+
 ## Usage
 
 ```
